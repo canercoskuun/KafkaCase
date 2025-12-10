@@ -6,8 +6,6 @@ import com.example.KafkaCase.mapper.PackageMapper;
 import com.example.KafkaCase.repository.PackageEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,14 +27,15 @@ public class PackageService {
     public String sendSingle(Long id) {
 
             PackageEntity p = repository.findById(id)
-                    .orElseThrow(() -> new PackageNotFoundException("Package not found: " + id));;
-
+                    .orElseThrow(() -> new PackageNotFoundException("Package not found: " + id));
+            //cancelled packages should be filtered and not be sent to the topic
             if (p.getCancelled()){
                 logger.info("Package {} is cancelled. Skipping.", id);
                 return "Package "+ id + " is cancelled."  ;
             }
+            //send kafka
             sender.send("single_mapped_packages",String.valueOf(p.getId()),mapper.map(p));
-            logger.info("Package {} sent to Kafka.", id);
+            logger.info("Package {} sent to Kafka single_mapped_packages.", id);
             return "Package "+ id + " sent to Kafka.";
 
     }
@@ -49,7 +48,7 @@ public class PackageService {
             return "No packages found.Nothing to send";
         }
         list.forEach(p -> sender.send("bootstrap_mapped_packages",String.valueOf(p.getId()),mapper.map(p)));
-        logger.info("Bootstrap sent {} packages to Kafka.", list.size());
+        logger.info("Bootstrap sent {} packages to Kafka bootstrap_mapped_packages.", list.size());
         return "All packages sent to kafka.";
     }
 }

@@ -3,8 +3,8 @@
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 
-    "database.hostname": "host.docker.internal",
-    "database.port": "5433",
+    "database.hostname": "db",
+    "database.port": "5432",
     "database.user": "postgres",
     "database.password": "123456",
     "database.dbname": "kafka-case",
