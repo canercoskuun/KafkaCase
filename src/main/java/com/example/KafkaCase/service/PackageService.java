@@ -9,7 +9,6 @@ import com.example.KafkaCase.repository.PackageEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 
@@ -29,7 +28,6 @@ public class PackageService {
     }
 
     public String sendSingle(Long id) {
-
             PackageEntity p = repository.findById(id)
                     .orElseThrow(() -> new PackageNotFoundException("Package not found: " + id));
             //cancelled packages should be filtered and not be sent to the topic
@@ -41,7 +39,6 @@ public class PackageService {
             sender.send("single_mapped_packages",String.valueOf(p.getId()),mapper.map(p));
             logger.info("Package {} sent to Kafka single_mapped_packages.", id);
             return "Package "+ id + " sent to Kafka.";
-
     }
 
     public String getAllActivePackagesAndSendKafka() {

@@ -10,8 +10,18 @@ import java.util.List;
 @Repository
 public interface PackageEntityRepository extends JpaRepository<PackageEntity, Long> {
     //filter where extract the data -> more effective
-    @Query(" SELECT NEW com.example.KafkaCase.dto.MiniPackage(" +
-            " p.id, p.completed_at, p.created_at, p.last_updated_at, p.eta, p.status, p.picked_up_at) " +
-            " FROM PackageEntity p WHERE p.cancelled = false")
+    @Query("""
+           SELECT NEW com.example.KafkaCase.dto.MiniPackage(
+               p.id,
+               p.completed_at,
+               p.created_at,
+               p.last_updated_at,
+               p.eta,
+               p.status,
+               p.picked_up_at
+           )
+           FROM PackageEntity p
+           WHERE p.cancelled = false
+           """)
     List<MiniPackage> getAllActiveMiniPackages();
 }

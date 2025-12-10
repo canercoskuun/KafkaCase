@@ -61,5 +61,4 @@ public class PackageEntity {
     private String status;
 
     private Boolean reassigned;
-
 }
