@@ -1,0 +1,29 @@
+{
+  "name": "debezium-test-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+
+    "database.hostname": "host.docker.internal",
+    "database.port": "5433",
+    "database.user": "postgres",
+    "database.password": "123456",
+    "database.dbname": "kafka-case",
+
+    "topic.prefix": "kafka_case",
+
+    "schema.include.list": "public",
+    "table.include.list": "public.package",
+    "slot.name": "debezium",
+
+    "column.include.list":"public.package.id,public.package.cancelled,public.package.completed_at,public.package.created_at,public.package.last_updated_at,public.package.eta,public.package.status,public.package.picked_up_at",
+
+    "plugin.name": "pgoutput",
+
+    "database.history.kafka.bootstrap.servers": "localhost:9092",
+
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false"
+  }
+}
