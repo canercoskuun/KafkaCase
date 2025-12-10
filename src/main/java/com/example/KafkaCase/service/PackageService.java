@@ -1,7 +1,9 @@
 package com.example.KafkaCase.service;
 
+import com.example.KafkaCase.dto.MiniPackage;
 import com.example.KafkaCase.entity.PackageEntity;
 import com.example.KafkaCase.exception.PackageNotFoundException;
+import com.example.KafkaCase.mapper.MiniToPackageEntityMapper;
 import com.example.KafkaCase.mapper.PackageMapper;
 import com.example.KafkaCase.repository.PackageEntityRepository;
 import org.slf4j.Logger;
@@ -16,11 +18,13 @@ public class PackageService {
     private static final Logger logger = LoggerFactory.getLogger(PackageService.class);
     private final PackageEntityRepository repository;
     private final PackageMapper mapper;
+    private final MiniToPackageEntityMapper toEntityMapper;
     private final KafkaSenderService sender;
 
-    public PackageService(PackageEntityRepository repository, PackageMapper mapper, KafkaSenderService sender) {
+    public PackageService(PackageEntityRepository repository, PackageMapper mapper, MiniToPackageEntityMapper toEntityMapper, KafkaSenderService sender) {
         this.repository = repository;
         this.mapper = mapper;
+        this.toEntityMapper = toEntityMapper;
         this.sender = sender;
     }
 
@@ -42,12 +46,17 @@ public class PackageService {
 
     public String getAllActivePackagesAndSendKafka() {
         logger.info("Get all active packages");
-        List<PackageEntity> list = repository.getAllActivePackages();
+        List<MiniPackage> list = repository.getAllActiveMiniPackages();
+
         if (list.isEmpty()) {
             logger.info("No packages found. Nothing to send.");
             return "No packages found.Nothing to send";
         }
-        list.forEach(p -> sender.send("bootstrap_mapped_packages",String.valueOf(p.getId()),mapper.map(p)));
+        list.stream().
+                map(toEntityMapper::mapToPackage).
+                map(mapper::map).
+                forEach(mappedPackage  ->
+                        sender.send("bootstrap_mapped_packages",String.valueOf(mappedPackage .getId()),mappedPackage));
         logger.info("Bootstrap sent {} packages to Kafka bootstrap_mapped_packages.", list.size());
         return "All packages sent to kafka.";
     }
