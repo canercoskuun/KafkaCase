@@ -32,24 +32,27 @@ public class PackageMapper {
         }
         // no need null check because status completed.
         // calculate lead time
-        int leadTime = calculateMinutes(p.getCreated_at(),p.getCompleted_at());
+        Integer leadTime = calculateMinutes(p.getCreated_at(),p.getCompleted_at());
         m.setLeadTime(leadTime);
 
         //check order in time
         m.setOrderInTime(leadTime <= p.getEta());
 
         //calculate collection duration
-        int collectionDuration=calculateMinutes(p.getCreated_at(),p.getPicked_up_at());
+        Integer collectionDuration=calculateMinutes(p.getCreated_at(),p.getPicked_up_at());
         m.setCollectionDuration(collectionDuration);
 
         //calculate delivery duration
-        int deliveryDuration=calculateMinutes(p.getPicked_up_at(),p.getCompleted_at());
+        Integer deliveryDuration=calculateMinutes(p.getPicked_up_at(),p.getCompleted_at());
         m.setDeliveryDuration(deliveryDuration);
 
         return m;
     }
     // Returns the number of whole minutes between start and end.
-    private int calculateMinutes(LocalDateTime start, LocalDateTime end) {
+    private Integer calculateMinutes(LocalDateTime start, LocalDateTime end) {
+        if (start == null || end == null) {
+            return null;
+        }
         return (int) Duration.between(start, end).toMinutes();
     }
 }

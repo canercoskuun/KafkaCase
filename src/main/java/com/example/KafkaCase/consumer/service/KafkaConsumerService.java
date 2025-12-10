@@ -18,6 +18,7 @@ public class KafkaConsumerService {
     private final KafkaSenderService sender;
     private final PackageMapper mapper;
     private final PackageEntityMapper packageEntityMapper;
+    private static final String topicName="mapped_package_cdc";
 
     public KafkaConsumerService(KafkaSenderService sender, PackageMapper mapper, PackageEntityMapper packageEntityMapper) {
         this.sender = sender;
@@ -30,13 +31,13 @@ public class KafkaConsumerService {
         JsonNode after = msg.get("after");
         //if deleted - > tombstone
         if(after.isNull()){
-            sender.send("mapped_package_cdc",msg.get("before").get("id").toString(),null);
-            logger.info("Tombstone is sent to mapped_package_cdc with id {}.",msg.get("before").get("id").toString());
+            sender.send(topicName,msg.get("before").get("id").toString(),null);
+            logger.info("Tombstone is sent to {} with id {}.",topicName,msg.get("before").get("id").toString());
             return;
         }
         //first cancelled check then map (if it is cancelled no need to map)
         if (after.get("cancelled").asBoolean()){
-            logger.info("Package {} is cancelled. Skipping.", after.get("id"));
+            logger.info("Package {} is cancelled.It is not sent to Kafka {}. Skipping.",after.get("id"),topicName);
             return;
         }
 
@@ -44,8 +45,8 @@ public class KafkaConsumerService {
         MappedPackage mapped = mapper.map(entity);
 
         String key = String.valueOf(mapped.getId());
-        sender.send("mapped_package_cdc",key,mapped);
-        logger.info("Package {} sent to Kafka mapped_package_cdc.",mapped.getId());
+        sender.send(topicName,key,mapped);
+        logger.info("Package {} sent to Kafka {}.",mapped.getId(),topicName);
     }
 
 
