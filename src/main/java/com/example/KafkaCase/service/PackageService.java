@@ -24,8 +24,9 @@ public class PackageService {
 
     public String sendSingle(Long id) {
             MiniPackage p = repository.getActiveMiniPackageById(id)
-                    .orElseThrow(() -> new PackageNotFoundException("Package not found: " + id));
+                    .orElseThrow(() -> new PackageNotFoundException("Package not found or cancelled: " + id));
             //cancelled packages should be filtered and not be sent to the topic(in repo)
+            // if this is important point it would be check here.
             //send kafka
             sender.send("single_mapped_packages",String.valueOf(p.getId()),mapper.map(p));
             logger.info("Package {} sent to Kafka single_mapped_packages.", id);
