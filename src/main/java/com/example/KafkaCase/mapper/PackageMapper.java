@@ -1,6 +1,6 @@
 package com.example.KafkaCase.mapper;
 import com.example.KafkaCase.dto.MappedPackage;
-import com.example.KafkaCase.entity.PackageEntity;
+import com.example.KafkaCase.dto.MiniPackage;
 import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public class PackageMapper {
     private static final String DATE_FORMAT="yyyy-MM-dd HH:mm:ss";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
-    public MappedPackage map(PackageEntity p) {
+    public MappedPackage map(MiniPackage p) {
 
         MappedPackage m = new MappedPackage();
 

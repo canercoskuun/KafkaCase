@@ -2,7 +2,7 @@ package com.example.KafkaCase.consumer.service;
 
 import com.example.KafkaCase.consumer.mapper.PackageEntityMapper;
 import com.example.KafkaCase.dto.MappedPackage;
-import com.example.KafkaCase.entity.PackageEntity;
+import com.example.KafkaCase.dto.MiniPackage;
 import com.example.KafkaCase.mapper.PackageMapper;
 import com.example.KafkaCase.service.KafkaSenderService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -29,7 +29,7 @@ public class KafkaConsumerService {
     @KafkaListener(topics = "kafka_case.public.package", groupId = "package_cg")
     public void consume(JsonNode msg) {
         JsonNode after = msg.get("after");
-        //if deleted - > tombstone
+        //deleted check
         if(after.isNull()){
             sender.send(topicName,msg.get("before").get("id").toString(),null);
             logger.info("Tombstone is sent to {} with id {}.",topicName,msg.get("before").get("id").toString());
@@ -40,10 +40,11 @@ public class KafkaConsumerService {
             logger.info("Package {} is cancelled.It is not sent to Kafka {}. Skipping.",after.get("id"),topicName);
             return;
         }
-
-        PackageEntity entity = packageEntityMapper.mapToEntity(after);
+        //after to minipackage
+        MiniPackage entity = packageEntityMapper.mapToEntity(after);
+        //minipackage to mappedpackage
         MappedPackage mapped = mapper.map(entity);
-
+        //send kafka
         String key = String.valueOf(mapped.getId());
         sender.send(topicName,key,mapped);
         logger.info("Package {} sent to Kafka {}.",mapped.getId(),topicName);

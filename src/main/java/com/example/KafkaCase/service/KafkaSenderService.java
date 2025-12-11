@@ -1,6 +1,5 @@
 package com.example.KafkaCase.service;
 import com.example.KafkaCase.dto.MappedPackage;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
