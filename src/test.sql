@@ -109,7 +109,7 @@ VALUES (
            '2021-11-13 07:00:00',
            '2021-11-13 07:05:00',
            'WAITING_FOR_ASSIGNMENT',
-           FALSE,
+           TRUE,
            TRUE
        );
 
