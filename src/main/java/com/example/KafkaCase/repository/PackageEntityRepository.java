@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+
+
 @Repository
 public interface PackageEntityRepository extends JpaRepository<PackageEntity, Long> {
 
@@ -27,7 +30,6 @@ public interface PackageEntityRepository extends JpaRepository<PackageEntity, Lo
        """)
     Optional<MiniPackage> getActiveMiniPackageById(@Param("id") Long id);
 
-    //filter during extract the data -> more effective
     @Query("""
            SELECT NEW com.example.KafkaCase.dto.MiniPackage(
                p.id,

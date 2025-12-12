@@ -37,20 +37,19 @@ public class StartupRunner implements CommandLineRunner {
         p0.setCompleted_at(LocalDateTime.parse("2021-11-13T11:40:15.314340"));
         p0.setCreated_at(LocalDateTime.parse("2021-11-13T10:47:52.675248"));
         p0.setCustomer_id(20002011575015L);
-        p0.setDelivery_date(LocalDateTime.parse("2021-11-13T00:00:00")); // sadece tarih olduğu için 00:00'a çeviriyoruz
+        p0.setDelivery_date(LocalDateTime.parse("2021-11-13T00:00:00"));
         p0.setEta(277);
         p0.setIn_delivery_at(LocalDateTime.parse("2021-11-13T11:05:56.861614"));
         p0.setLast_updated_at(LocalDateTime.parse("2021-11-13T11:40:15.314340"));
         p0.setOrder_id(123972783L);
         p0.setOrigin_address_id(999000020443388L);
         p0.setPicked_up_at(LocalDateTime.parse("2021-11-13T10:49:50.278087"));
-        p0.setReassigned(null); // NULL geldiği için
+        p0.setReassigned(null); //
         p0.setStatus("COMPLETED");
         p0.setStore_id(20000000004103L);
         p0.setType("REGULAR");
         p0.setUser_id(50002010395213L);
         p0.setWaiting_for_assignment_at(LocalDateTime.parse("2021-11-13T10:47:52.675248"));
-
 
         PackageEntity p1 = new PackageEntity();
         p1.setId(1002L);

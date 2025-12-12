@@ -15,14 +15,11 @@ public class PackageMapper {
     public MappedPackage map(MiniPackage p) {
 
         MappedPackage m = new MappedPackage();
-
-        //creating feature
         m.setId(p.getId());
         m.setCreatedAt(p.getCreated_at().format(formatter));
         m.setLastUpdatedAt(p.getLast_updated_at().format(formatter));
         m.setEta(p.getEta());
-
-        //if not complete
+        // If not completed, set the value to null.
         if (!"COMPLETED".equals(p.getStatus())) {
             m.setCollectionDuration(null);
             m.setDeliveryDuration(null);
@@ -30,12 +27,11 @@ public class PackageMapper {
             m.setOrderInTime(null);
             return m;
         }
-        // no need null check because status completed.
         // calculate lead time
         Integer leadTime = calculateMinutes(p.getCreated_at(),p.getCompleted_at());
         m.setLeadTime(leadTime);
 
-        //check order in time
+        // Check order-in-time.
         m.setOrderInTime(leadTime <= p.getEta());
 
         //calculate collection duration

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class DebeziumConnectorService {
     private static final Logger logger = LoggerFactory.getLogger(DebeziumConnectorService.class);
     private final RestTemplate restTemplate = new RestTemplate();
-
+    //Creates the Debezium PostgreSQL connector by posting its configuration
     public void createConnector() throws IOException {
         String url = "http://localhost:8083/connectors";
         String json = new String(

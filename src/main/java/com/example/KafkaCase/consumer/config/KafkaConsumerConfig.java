@@ -38,7 +38,7 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, JsonNode> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, JsonNode> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        // filter tombstone message
+        // filter tombstone messages
         factory.setRecordFilterStrategy(record -> record.value() == null);
         return factory;
     }

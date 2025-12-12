@@ -12,7 +12,7 @@ public class KafkaSenderService {
     public KafkaSenderService(KafkaTemplate<String, MappedPackage> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
-    //use key to guarantee message ordering
+    //Use the key to guarantee message ordering.
     public void send(String topicName,String key,MappedPackage pkg) {
         kafkaTemplate.send(topicName,key,pkg);
     }

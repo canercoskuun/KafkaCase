@@ -29,25 +29,25 @@ public class KafkaConsumerService {
     @KafkaListener(topics = "kafka_case.public.package", groupId = "package_cg")
     public void consume(JsonNode msg) {
         JsonNode after = msg.get("after");
-        //deleted check
+        //Handle delete events
         if(after.isNull()){
             sender.send(topicName,msg.get("before").get("id").toString(),null);
             logger.info("Tombstone is sent to {} with id {}.",topicName,msg.get("before").get("id").toString());
             return;
         }
-        //first cancelled check then map (if it is cancelled no need to map)
+        //Skip cancelled packages (no need to map or send them to Kafka)
         if (after.get("cancelled").asBoolean()){
             logger.info("Package {} is cancelled.It is not sent to Kafka {}. Skipping.",after.get("id"),topicName);
             return;
         }
-        //after to minipackage
+        // Map the CDC 'after' payload to a MiniPackage DTO
         MiniPackage entity = packageEntityMapper.mapToEntity(after);
-        //minipackage to mappedpackage
+        // Transform MiniPackage to MappedPackage
         MappedPackage mapped = mapper.map(entity);
-        //send kafka
+        // Send transformed record to target Kafka topic using package id as key (ordering guarantee)
         String key = String.valueOf(mapped.getId());
         sender.send(topicName,key,mapped);
-        logger.info("Package {} sent to Kafka {}.",mapped.getId(),topicName);
+        logger.info("Package {} sent to Kafka {}.",key,topicName);
     }
 
 
