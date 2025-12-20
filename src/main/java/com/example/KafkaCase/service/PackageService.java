@@ -37,13 +37,13 @@ public class PackageService {
 
         if (list.isEmpty()) {
             logger.info("No packages found. Nothing to send.");
-            return "No packages found.Nothing to send";
+            return "No packages found. Nothing to send";
         }
 
         list.stream().
                 map(mapper::map).
-                forEach(mappedPackage  ->
-                        sender.send("bootstrap_mapped_packages",String.valueOf(mappedPackage .getId()),mappedPackage));
+                forEach(mappedPackage ->
+                        sender.send("bootstrap_mapped_packages",String.valueOf(mappedPackage.getId()),mappedPackage));
         logger.info("Bootstrap sent {} packages to Kafka bootstrap_mapped_packages.", list.size());
         return "All packages sent to kafka.";
     }
