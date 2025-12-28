@@ -35,3 +35,13 @@ Navigate to the project root directory and run:
 
 ```bash
 docker-compose up -d
+
+
+🗄️ Database Access
+Username: postgres
+Database: kafka-case
+
+docker exec -it <postgres_container_id> psql -U postgres kafka-case
+
+
+
