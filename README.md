@@ -6,7 +6,7 @@ The system captures database changes from PostgreSQL, publishes them to Kafka vi
 
 ---
 
-## 🧱 Architecture Overview
+##  Architecture Overview
 
 - **PostgreSQL** – Source database  
 - **Debezium PostgreSQL Connector** – Captures INSERT / UPDATE / DELETE events  
@@ -18,7 +18,7 @@ The system captures database changes from PostgreSQL, publishes them to Kafka vi
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -38,7 +38,7 @@ docker-compose up -d
 ```
 ---
 
-### 🗄️ Database Access
+###  Database Access
 
 PostgreSQL is running inside Docker Compose and is already initialized.
 
