@@ -35,10 +35,10 @@ Navigate to the project root directory and run:
 
 ```bash
 docker-compose up -d
-
+```
 ---
 
-## 🗄️ Database Access
+### 🗄️ Database Access
 
 PostgreSQL is running inside Docker Compose and is already initialized.
 
@@ -46,4 +46,4 @@ To connect to the database container:
 
 ```bash
 docker exec -it <postgres_container_id> psql -U postgres kafka-case
-
+```
