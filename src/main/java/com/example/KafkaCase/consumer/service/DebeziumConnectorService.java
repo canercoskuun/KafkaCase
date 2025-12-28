@@ -16,7 +16,7 @@ public class DebeziumConnectorService {
     private final RestTemplate restTemplate = new RestTemplate();
     //Creates the Debezium PostgreSQL connector by posting its configuration
     public void createConnector() throws IOException {
-        String url = "http://localhost:8083/connectors";
+        String url = "http://debezium:8083/connectors";
         String json = new String(
                 Objects.requireNonNull(this.getClass().getClassLoader()
                         .getResourceAsStream("config/debezium-connector.json")).readAllBytes()

@@ -19,7 +19,7 @@
 
     "plugin.name": "pgoutput",
 
-    "database.history.kafka.bootstrap.servers": "localhost:9092",
+    "database.history.kafka.bootstrap.servers": "kafka:29092",
 
     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
     "key.converter.schemas.enable": "false",

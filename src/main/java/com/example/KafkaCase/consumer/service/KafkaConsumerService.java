@@ -35,7 +35,7 @@ public class KafkaConsumerService {
             logger.info("Tombstone is sent to {} with id {}.",topicName,msg.get("before").get("id").toString());
             return;
         }
-        //Skip cancelled packages (no need to map or send them to Kafka)
+        //Skip canceled packages (no need to map or send them to Kafka)
         if (after.get("cancelled").asBoolean()){
             logger.info("Package {} is cancelled.It is not sent to Kafka {}. Skipping.",after.get("id"),topicName);
             return;
