@@ -49,14 +49,22 @@ docker exec -it <postgres_container_id> psql -U postgres kafka-case
 ```
 ---
 ### Kafka Topics
-**kafka_case.public.package:**Debezium publishes all raw INSERT / UPDATE / DELETE changes captured from PostgreSQL.
+
+**kafka_case.public.package**  
+Debezium publishes all raw `INSERT / UPDATE / DELETE` changes captured from PostgreSQL.  
 This topic acts as the main CDC source topic.
-**mapped_package_cdc:**Contains records transformed by the Java application.
-The source of this topic is kafka_case.public.package.
-**bootstrap_mapped_package:**Used for the bulk bootstrap process.
-All existing package records are transformed and published to this topic.
-Triggered via REST endpoint:
-GET http://localhost:8090/kafka/bootstrap
-**single_mapped_packages:**Used to publish a single transformed package record.
-Triggered via REST endpoint:
-GET http://localhost:8090/kafka/send/{id}
+
+**mapped_package_cdc**  
+Contains records transformed by the Java application.  
+The source of this topic is `kafka_case.public.package`.
+
+**bootstrap_mapped_package**  
+Used for the bulk bootstrap process.  
+All existing package records are transformed and published to this topic.  
+Triggered via REST endpoint:  
+`GET http://localhost:8090/kafka/bootstrap`
+
+**single_mapped_packages**  
+Used to publish a single transformed package record.  
+Triggered via REST endpoint:  
+`GET http://localhost:8090/kafka/send/{id}`
