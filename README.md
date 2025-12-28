@@ -28,7 +28,7 @@ The system captures database changes from PostgreSQL, publishes them to Kafka vi
 
 ---
 
-### 1️⃣ Start Docker Services
+### Start Docker Services
 
 Make sure Docker Desktop is running.  
 Navigate to the project root directory and run:
