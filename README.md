@@ -58,9 +58,8 @@ This topic acts as the main CDC source topic.
 Contains records transformed by the Java application.  
 The source of this topic is `kafka_case.public.package`.
 
-**bootstrap_mapped_package**  
-Used for the bulk bootstrap process.  
-All existing package records are transformed and published to this topic.  
+**bootstrap_mapped_package** :Used for the bulk bootstrap process.All existing package records are transformed and published to this topic.  
+
 Triggered via REST endpoint:  
 `GET http://localhost:8090/kafka/bootstrap`
 
