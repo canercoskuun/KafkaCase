@@ -6,11 +6,7 @@ RUN mvn package -DskipTests \
     && cp target/*.jar app.jar
 
 FROM eclipse-temurin:17-jre-alpine
-
 WORKDIR /app
-
 COPY --from=build /app/app.jar app.jar
-
 EXPOSE 8090
-
 ENTRYPOINT ["java", "-jar", "app.jar"]
