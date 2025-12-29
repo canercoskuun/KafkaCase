@@ -70,6 +70,8 @@ Triggered via REST endpoint:
 To continuously populate data into Kafka, several approaches can be considered.  
 Below is a brief overview of common methods and the approach used in this project.
 
+---
+
 ### Incremental Load (Polling-Based)
 One approach is to perform incremental loads using a timestamp column such as `last_updated_at`.
 On each run, the application fetches only records updated after the last processed timestamp.
